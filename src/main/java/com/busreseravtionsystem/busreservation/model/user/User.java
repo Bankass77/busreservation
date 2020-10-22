@@ -21,8 +21,6 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-
 import org.springframework.lang.NonNull;
 
 import lombok.AllArgsConstructor;
