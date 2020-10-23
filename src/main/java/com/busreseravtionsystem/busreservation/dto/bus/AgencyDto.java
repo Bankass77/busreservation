@@ -32,45 +32,5 @@ public class AgencyDto {
 	
 	private String details;
 
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public UserDto getUserOwner() {
-		return userOwner;
-	}
-
-	public void setUserOwner(UserDto userOwner) {
-		this.userOwner = userOwner;
-	}
-
-	public Set<BusDto> getBusDtos() {
-		return busDtos;
-	}
-
-	public void setBusDtos(Set<BusDto> busDtos) {
-		this.busDtos = busDtos;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDetails() {
-		return details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
-	}
-
-
+	
 }

@@ -33,50 +33,6 @@ public class TripDto {
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public int getFare() {
-		return fare;
-	}
-	public void setFare(int fare) {
-		this.fare = fare;
-	}
-	public int getJourneyTime() {
-		return journeyTime;
-	}
-	public void setJourneyTime(int journeyTime) {
-		this.journeyTime = journeyTime;
-	}
-	public String getSourceStopCode() {
-		return sourceStopCode;
-	}
-	public void setSourceStopCode(String sourceStopCode) {
-		this.sourceStopCode = sourceStopCode;
-	}
-	public String getDestinationStopCode() {
-		return destinationStopCode;
-	}
-	public void setDestinationStopCode(String destinationStopCode) {
-		this.destinationStopCode = destinationStopCode;
-	}
-	public String getDestinationStopName() {
-		return destinationStopName;
-	}
-	public void setDestinationStopName(String destinationStopName) {
-		this.destinationStopName = destinationStopName;
-	}
-	public String getBusCode() {
-		return busCode;
-	}
-	public void setBusCode(String busCode) {
-		this.busCode = busCode;
-	}
-	public String getAgencyCode() {
-		return agencyCode;
-	}
-	public void setAgencyCode(String agencyCode) {
-		this.agencyCode = agencyCode;
-	}
+	
 
 }
