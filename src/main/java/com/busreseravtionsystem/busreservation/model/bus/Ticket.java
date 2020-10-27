@@ -14,17 +14,19 @@ import com.busreseravtionsystem.busreservation.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Accessors(chain = true)
 @Entity
 @Table (schema = "bankass", name = "ticket")
 public class Ticket {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private long  id;
 	
 	@Column
 	private int seatNumber;
@@ -37,6 +39,6 @@ public class Ticket {
 	
 	@OneToOne
 	private User passenger;
-	
 
+  
 }

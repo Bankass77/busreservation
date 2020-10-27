@@ -29,6 +29,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
@@ -40,6 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @Setter
+@Accessors(chain = true)
 public class User  implements Serializable{
 	/**
 	 * 
@@ -50,33 +52,33 @@ public class User  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
 	private long _id;
-	
+
 	@NonNull
 	@Column
 	@NotBlank
 	@NotEmpty(message="First name is required")
 	private String firstName;
-	
+
 	@NonNull
 	@Column
 	@NotBlank
 	@NotEmpty(message="Last name is required")
 	private String lastName;
-	
+
 	@NonNull
 	@Column
 	@Email
 	@NotBlank
 	@NotEmpty(message=" email is required")
 	private String email;
-	
+
 	@NonNull
 	@Column
 	@Email
 	@NotBlank
 	@NotEmpty(message=" password  is required")
 	private String password;
-	
+
 	@NonNull
 	@Column
 	@Email
@@ -87,8 +89,8 @@ public class User  implements Serializable{
 	 * message="Mobile number is invalid")
 	 */
 	private String mobileNumber;
-	
-	
+
+
 	//User role
 	@OneToMany (cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "users")
 	@Enumerated(EnumType.STRING)
@@ -97,11 +99,11 @@ public class User  implements Serializable{
 	@JoinTable(schema = "bankass",name = "user_role",joinColumns = {@JoinColumn(name="user_id" , referencedColumnName="id")}, inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName = "id")})
 	private Set<Role> roles;
 
-	
-	
-	private String getFullName()
-{
-	return firstName !=null? firstName.concat("").concat("lastName"): "";
-		
-}
+
+
+	public String getFullName()
+	{
+		return firstName !=null? firstName.concat("").concat("lastName"): "";
+
+	}
 }

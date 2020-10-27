@@ -16,11 +16,13 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+@Accessors(chain = true)
 @Table (schema = "bankass", name = "role")
 public class Role  implements Serializable{
 	
