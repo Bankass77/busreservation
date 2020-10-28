@@ -1,9 +1,14 @@
 package com.busreseravtionsystem.busreservation.model.bus;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,11 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @Accessors(chain = true)
-@Table(schema = "bankass", name = "bus")
+@Table(schema = "bankass", name = "bus", indexes = @Index(columnList = "code",name = "idx_bus_code", unique = true))
 public class Bus {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "bus_id")
 	private long id;
 	
 	@Column
@@ -36,7 +42,8 @@ public class Bus {
 	@Column
 	private String make;
 	
-	@OneToMany
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "agency_id")
 	private Agency agency;
 	
 

@@ -2,9 +2,12 @@ package com.busreseravtionsystem.busreservation.model.bus;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,18 +29,21 @@ public class Ticket {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ticket_id")
 	private long  id;
 	
-	@Column
+	@Column(name = "seat_number")
 	private int seatNumber;
 	
-	@Column
+	@Column(name = "journey_date")
 	private String journeyDate;
 	
-	@OneToMany
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "trip_schedule_id")
 	private TripSchedule tripSchedule;
 	
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "users_id")
 	private User passenger;
 
   

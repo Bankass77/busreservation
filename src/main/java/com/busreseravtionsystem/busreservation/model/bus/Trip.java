@@ -2,9 +2,12 @@ package com.busreseravtionsystem.busreservation.model.bus;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +29,7 @@ public class Trip {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
+	@Column(name = "trip_id")
 	private long id;
 
 	@Column
@@ -34,15 +38,21 @@ public class Trip {
 	@Column
 	private int journeyTime;
 
-	@Column
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "source_stop_id")
 	private  Stop sourceStop;
 
-	@Column
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dest_stop_id")
 	private Stop destStop;
 
-	@Column
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "bus_id")
 	private Bus bus;
-	@Column
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "agency_id")
 	private Agency agency;
 
 }

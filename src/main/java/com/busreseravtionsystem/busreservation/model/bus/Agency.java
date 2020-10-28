@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,12 +26,13 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @Accessors(chain = true)
-@Table(schema = "bankass", name = "agency")
+@Table(schema = "bankass", name = "agency", indexes = @Index(unique = true, columnList = "code", name = "idx_agency_code"))
 public class Agency {
 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ageny_id")
 	private long id;
 	
 	@Column

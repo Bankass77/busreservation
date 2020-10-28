@@ -6,10 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,12 +36,14 @@ public class Role  implements Serializable{
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
+	@Column(name = "role_id")
 	private long id;
 	
-	@Column
-	private String name;
 	
-	@ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Enumerated(EnumType.STRING)
+	private UserRole role;
+	
+	@ManyToMany(mappedBy="roles",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<User> users;
 	
 

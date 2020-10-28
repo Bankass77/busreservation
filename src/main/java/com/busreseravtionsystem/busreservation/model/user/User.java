@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
@@ -33,7 +34,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
-@Table (schema = "bankass", name = "users",uniqueConstraints =@UniqueConstraint(columnNames={"_id"}))
+@Table (schema = "bankass", name = "users",uniqueConstraints =@UniqueConstraint(columnNames={"_id"}),
+      indexes = @Index(columnList = "email", name = "idx_users_email",unique = true))
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,17 +52,17 @@ public class User  implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column
+	@Column(name = "users_id")
 	private long _id;
 
 	@NonNull
-	@Column
+	@Column(name = "first_name",updatable = true)
 	@NotBlank
 	@NotEmpty(message="First name is required")
 	private String firstName;
 
 	@NonNull
-	@Column
+	@Column(name = "last_name", updatable = true)
 	@NotBlank
 	@NotEmpty(message="Last name is required")
 	private String lastName;
@@ -80,7 +82,7 @@ public class User  implements Serializable{
 	private String password;
 
 	@NonNull
-	@Column
+	@Column(name = "mobile_number",updatable = true)
 	@Email
 	@NotBlank
 	@NotEmpty(message=" mobile number is required")
@@ -96,7 +98,7 @@ public class User  implements Serializable{
 	@Enumerated(EnumType.STRING)
 	@ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
 	//@CollectionTable (schema = "bankass",name = "user_role", joinColumns = @JoinColumn(name="_id"))
-	@JoinTable(schema = "bankass",name = "user_role",joinColumns = {@JoinColumn(name="user_id" , referencedColumnName="id")}, inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName = "id")})
+	@JoinTable(schema = "bankass",name = "users_role",joinColumns = {@JoinColumn(name="users_id" , referencedColumnName="role_id")}, inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName = "users_id")})
 	private Set<Role> roles;
 
 
