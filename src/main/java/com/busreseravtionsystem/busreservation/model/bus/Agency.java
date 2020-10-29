@@ -3,6 +3,8 @@ package com.busreseravtionsystem.busreservation.model.bus;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 @Accessors(chain = true)
+@Entity
 @Table(schema = "bankass", name = "agency", indexes = @Index(unique = true, columnList = "code", name = "idx_agency_code"))
 public class Agency {
 
@@ -41,10 +44,13 @@ public class Agency {
 	@Column
 	private String name;
 	
+	@Column
+	private String details;
+	
 	@ManyToOne
 	private User user;
 	
-	@OneToMany
+	@OneToMany(mappedBy ="agency" ,fetch = FetchType.LAZY)
 	private Set<Bus> buses; 
 	
 	

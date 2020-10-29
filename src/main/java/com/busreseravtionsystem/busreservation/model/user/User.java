@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -34,7 +35,7 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
-@Table (schema = "bankass", name = "users",uniqueConstraints =@UniqueConstraint(columnNames={"_id"}),
+@Table (schema = "bankass", name = "users",uniqueConstraints =@UniqueConstraint(columnNames={"users_id"}),
       indexes = @Index(columnList = "email", name = "idx_users_email",unique = true))
 @Data
 @AllArgsConstructor
@@ -53,7 +54,7 @@ public class User  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "users_id")
-	private long _id;
+	private long id;
 
 	@NonNull
 	@Column(name = "first_name",updatable = true)
@@ -76,14 +77,12 @@ public class User  implements Serializable{
 
 	@NonNull
 	@Column
-	@Email
 	@NotBlank
 	@NotEmpty(message=" password  is required")
 	private String password;
 
 	@NonNull
 	@Column(name = "mobile_number",updatable = true)
-	@Email
 	@NotBlank
 	@NotEmpty(message=" mobile number is required")
 	/*
@@ -94,14 +93,12 @@ public class User  implements Serializable{
 
 
 	//User role
-	@OneToMany (cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "users")
+	@ManyToMany (mappedBy ="users" ,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@Enumerated(EnumType.STRING)
 	@ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
 	//@CollectionTable (schema = "bankass",name = "user_role", joinColumns = @JoinColumn(name="_id"))
-	@JoinTable(schema = "bankass",name = "users_role",joinColumns = {@JoinColumn(name="users_id" , referencedColumnName="role_id")}, inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName = "users_id")})
+	@JoinTable(schema = "bankass",name = "users_role",joinColumns = {@JoinColumn(name="users_id")} , inverseJoinColumns = {@JoinColumn(name="role_id")})
 	private Set<Role> roles;
-
-
 
 	public String getFullName()
 	{
