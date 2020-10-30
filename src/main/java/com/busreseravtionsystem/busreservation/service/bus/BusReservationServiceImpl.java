@@ -1,4 +1,4 @@
-package com.busreseravtionsystem.busreservation.service.user;
+package com.busreseravtionsystem.busreservation.service.bus;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,6 @@ import com.busreseravtionsystem.busreservation.repository.bus.TicketRepository;
 import com.busreseravtionsystem.busreservation.repository.bus.TripRepository;
 import com.busreseravtionsystem.busreservation.repository.bus.TripScheduleRepository;
 import com.busreseravtionsystem.busreservation.repository.user.UserRepository;
-import com.busreseravtionsystem.busreservation.service.bus.BusReservationService;
 
 public class BusReservationServiceImpl implements BusReservationService {
 
@@ -83,23 +82,22 @@ public class BusReservationServiceImpl implements BusReservationService {
 		if (user != null) {
 
 			Optional<Agency> agency = Optional.ofNullable(agencyRepository.findAgencyByUser(user));
- 
+
 			if (agency.isPresent()) {
 				return modelMapper.map(agency.get(), AgencyDto.class);
-				
 
 			}
 
-			//throw exceptionWithId(EntityType.AGENCY, ExceptionType.ENTITY_NOT_FOUND, 2, user.getEmail());
+			// throw exceptionWithId(EntityType.AGENCY, ExceptionType.ENTITY_NOT_FOUND, 2,
+			// user.getEmail());
 		}
- 
+
 		throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, userDto.getEmail());
 	}
 
 	@Override
 	public AgencyDto addAgency(AgencyDto agencyDto) {
-		
-		
+
 		return null;
 	}
 
@@ -152,13 +150,10 @@ public class BusReservationServiceImpl implements BusReservationService {
 		return userRepository.findByEmail(userEmail);
 
 	}
-	
-	
-	
+
 	private Agency getAgencyCode(String code) {
 		return agencyRepository.getAgencyByCode(code);
-		
-		
+
 	}
-	
+
 }

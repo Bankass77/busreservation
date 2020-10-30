@@ -22,17 +22,15 @@ import lombok.extern.slf4j.Slf4j;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AgencyDto {
-	
-	
+
 	private long code;
-	
+
 	private UserDto userOwner;
-	
+
 	private Set<BusDto> busDtos;
-	
+
 	private String name;
-	
+
 	private String details;
 
-	
 }

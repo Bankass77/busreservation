@@ -25,25 +25,23 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Entity
 @Accessors(chain = true)
-@Table (schema = "bankass", name = "role")
-public class Role  implements Serializable{
-	
+@Table(schema = "bankass", name = "role")
+public class Role implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue (strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "role_id")
 	private long id;
-	
-	
+
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
-	
-	@ManyToMany(mappedBy="roles",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+	@ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<User> users;
-	
 
 }

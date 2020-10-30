@@ -6,14 +6,14 @@ import com.busreseravtionsystem.busreservation.model.bus.Agency;
 import com.busreseravtionsystem.busreservation.model.bus.Bus;
 
 public interface BusRepository extends JpaRepository<Bus, Long> {
-	
+
 	/**
 	 * 
 	 * @param busCode
 	 * @return
 	 */
-	Bus findBusByCode( String busCode);
-	
+	Bus findBusByCode(String busCode);
+
 	/**
 	 * 
 	 * @param busCode

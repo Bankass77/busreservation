@@ -19,20 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TripDto {
-	
+
 	private long id;
-	
 	private int fare;
 	private int journeyTime;
-	
 	private String sourceStopCode;
-	
 	private String destinationStopCode;
-	
 	private String destinationStopName;
 	private String busCode;
 	private String agencyCode;
-	
-	
 
 }

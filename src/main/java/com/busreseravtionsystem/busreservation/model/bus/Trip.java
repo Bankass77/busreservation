@@ -22,13 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @Setter
-@Accessors (chain = true)
+@Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Trip {
 
 	@Id
-	@GeneratedValue (strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "trip_id")
 	private long id;
 
@@ -40,12 +40,11 @@ public class Trip {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "source_stop_id")
-	private  Stop sourceStop;
+	private Stop sourceStop;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dest_stop_id")
 	private Stop destStop;
-
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "bus_id")

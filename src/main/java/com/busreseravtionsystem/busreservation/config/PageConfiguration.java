@@ -1,13 +1,12 @@
 package com.busreseravtionsystem.busreservation.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class PageConfiguration  implements WebMvcConfigurer{
-	
+public class PageConfiguration implements WebMvcConfigurer {
+
 	@Override
 	public void addViewControllers(ViewControllerRegistry controllerRegistry) {
 		controllerRegistry.addViewController("/home").setViewName("home");
@@ -20,7 +19,7 @@ public class PageConfiguration  implements WebMvcConfigurer{
 		controllerRegistry.addViewController("/bus").setViewName("bus");
 		controllerRegistry.addViewController("/trip").setViewName("trip");
 		controllerRegistry.addViewController("/logout").setViewName("logout");
-		
+
 	}
 
 }

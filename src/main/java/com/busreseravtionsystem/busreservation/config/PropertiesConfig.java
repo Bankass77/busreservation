@@ -11,9 +11,13 @@ public class PropertiesConfig {
 
 	@Autowired
 	private Environment env;
-	
-	public String getConfigValue( String configKey) {
-		
+
+	/**
+	 * @param configKey
+	 * @return
+	 */
+	public String getConfigValue(String configKey) {
+
 		return env.getProperty(configKey);
 	}
 }

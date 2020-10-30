@@ -37,6 +37,5 @@ public class UserDto {
 
 	private boolean isAdmin;
 	private Set<Role> roles;
-	
 
 }

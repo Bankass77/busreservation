@@ -6,14 +6,13 @@ import com.busreseravtionsystem.busreservation.model.bus.Trip;
 import com.busreseravtionsystem.busreservation.model.bus.TripSchedule;
 
 public interface TripScheduleRepository extends JpaRepository<TripSchedule, Long> {
-	
+
 	/**
 	 * 
 	 * @param tripDetail
 	 * @param tripDate
 	 * @return
 	 */
-	TripSchedule  findTripScheduleByTripDetailAndTripDate (Trip tripDetail, String tripDate);
-	
+	TripSchedule findTripScheduleByTripDetailAndTripDate(Trip tripDetail, String tripDate);
 
 }

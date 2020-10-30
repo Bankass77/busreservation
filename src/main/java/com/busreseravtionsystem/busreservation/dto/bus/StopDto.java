@@ -18,19 +18,18 @@ import lombok.extern.slf4j.Slf4j;
 @Accessors(chain = true)
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StopDto  implements Comparable<Object> {
-	
+public class StopDto implements Comparable<Object> {
+
 	private long code;
-	
+
 	private String name;
 
 	private String details;
 
-    @Override
+	@Override
 	public int compareTo(Object arg0) {
-	
+
 		return this.getName().compareTo(((StopDto) arg0).getName());
 	}
-
 
 }
