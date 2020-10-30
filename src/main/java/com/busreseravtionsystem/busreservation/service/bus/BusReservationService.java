@@ -1,5 +1,6 @@
 package com.busreseravtionsystem.busreservation.service.bus;
 
+import java.util.List;
 import java.util.Set;
 
 import com.busreseravtionsystem.busreservation.dto.bus.AgencyDto;
@@ -51,5 +52,15 @@ public interface BusReservationService {
 	 */
 	TripDto getTripById(Long id);
 
+	/**
+	 * @param tripDto
+	 * @return
+	 */
 	java.util.List<TripDto> addTrip(TripDto tripDto);
+	
+	/**
+	 * @param agencyCode
+	 * @return
+	 */
+	List<TripDto> getAgencyTrip(String agencyCode);
 }

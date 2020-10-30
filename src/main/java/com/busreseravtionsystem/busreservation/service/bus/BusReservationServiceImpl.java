@@ -1,5 +1,8 @@
 package com.busreseravtionsystem.busreservation.service.bus;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -9,17 +12,21 @@ import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.busreseravtionsystem.busreservation.dto.bus.AgencyDto;
 import com.busreseravtionsystem.busreservation.dto.bus.BusDto;
 import com.busreseravtionsystem.busreservation.dto.bus.StopDto;
 import com.busreseravtionsystem.busreservation.dto.bus.TripDto;
+import com.busreseravtionsystem.busreservation.dto.mapper.TripMapper;
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
 import com.busreseravtionsystem.busreservation.exception.BSRExecption;
 import com.busreseravtionsystem.busreservation.exception.EntityType;
 import com.busreseravtionsystem.busreservation.exception.ExceptionType;
 import com.busreseravtionsystem.busreservation.model.bus.Agency;
+import com.busreseravtionsystem.busreservation.model.bus.Bus;
 import com.busreseravtionsystem.busreservation.model.bus.Stop;
+import com.busreseravtionsystem.busreservation.model.bus.Trip;
 import com.busreseravtionsystem.busreservation.model.user.User;
 import com.busreseravtionsystem.busreservation.repository.bus.AgencyRepository;
 import com.busreseravtionsystem.busreservation.repository.bus.BusRepository;
@@ -28,14 +35,16 @@ import com.busreseravtionsystem.busreservation.repository.bus.TicketRepository;
 import com.busreseravtionsystem.busreservation.repository.bus.TripRepository;
 import com.busreseravtionsystem.busreservation.repository.bus.TripScheduleRepository;
 import com.busreseravtionsystem.busreservation.repository.user.UserRepository;
+import com.busreseravtionsystem.busreservation.util.RandomStringUtil;
 
+@Transactional
 public class BusReservationServiceImpl implements BusReservationService {
 
 	@Autowired
 	private AgencyRepository agencyRepository;
 
 	@Autowired
-	private BusRepository BusRepository;
+	private BusRepository busRepository;
 
 	@Autowired
 	private StopRepository stopRepository;
@@ -98,25 +107,135 @@ public class BusReservationServiceImpl implements BusReservationService {
 	@Override
 	public AgencyDto addAgency(AgencyDto agencyDto) {
 
-		return null;
+		User agencyAdminUser = getUser(agencyDto.getUserOwner().getEmail());
+
+		if (agencyAdminUser != null) {
+			Optional<Agency> newAgency = Optional.ofNullable(agencyRepository.findAgencyByName(agencyDto.getName()));
+			if (!newAgency.isPresent()) {
+
+				Agency aNewAgency = new Agency().setName(agencyDto.getName())
+						.setCode(RandomStringUtil.getAlphaNumericString(16, agencyDto.getName()))
+						.setDetails(agencyDto.getDetails()).setUser(agencyAdminUser);
+
+				agencyRepository.save(aNewAgency);
+				return modelMapper.map(aNewAgency, AgencyDto.class);
+			}
+
+			throw exception(EntityType.AGENCY, ExceptionType.DUPLICATE_ENTITY, agencyDto.getName());
+
+		}
+
+		throw exception(EntityType.AGENCY, ExceptionType.ENTITY_NOT_FOUND, agencyDto.getUserOwner().getEmail());
 	}
 
 	@Override
 	public AgencyDto updateAgency(AgencyDto agencyDto, BusDto busDto) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Agency agencyToUpdate = getAgencyCode(agencyDto.getCode());
+
+		if (agencyToUpdate != null) {
+
+			if (busDto != null) {
+
+				Optional<Bus> bOptional = Optional
+						.ofNullable(busRepository.findBusByCodeAndAgency(busDto.getCode(), agencyToUpdate));
+
+				if (!bOptional.isPresent()) {
+
+					Bus bus = new Bus().setAgency(agencyToUpdate).setCapacity(busDto.getCapacity())
+							.setCode(busDto.getCode()).setMake(busDto.getMake());
+
+					busRepository.save(bus);
+					if (agencyToUpdate.getBuses() == null) {
+
+						agencyToUpdate.setBuses(new HashSet<Bus>());
+					}
+
+					agencyToUpdate.getBuses().add(bus);
+
+					return modelMapper.map(agencyRepository.save(agencyToUpdate), AgencyDto.class);
+				}
+
+			} else {
+
+				// update agency info
+
+				agencyToUpdate.setName(agencyDto.getName()).setDetails(agencyDto.getDetails());
+
+				return modelMapper.map(agencyRepository.save(agencyToUpdate), AgencyDto.class);
+			}
+
+		}
+		return agencyDto;
+
 	}
 
 	@Override
 	public TripDto getTripById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Optional<Trip> trip = tripRepository.findById(id);
+
+		if (trip.isPresent()) {
+			return TripMapper.toTripMapper(trip.get());
+		}
+
+		throw exception(EntityType.TRIP, ExceptionType.ENTITY_NOT_FOUND, id.toString());
 	}
 
 	@Override
 	public List<TripDto> addTrip(TripDto tripDto) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<TripDto> trips = new ArrayList<TripDto>();
+		Stop stopDepart = getStop(tripDto.getSourceStopCode());
+		if (stopDepart != null) {
+			Stop stopArrival = getStop(tripDto.getDestinationStopCode());
+			if (stopArrival != null) {
+
+				if (!stopDepart.getCode().equalsIgnoreCase(stopArrival.getCode())) {
+					Agency agency = getAgencyCode(tripDto.getAgencyCode());
+					if (agency != null) {
+
+						Bus busOfAgency = getBusOfAgency(tripDto.getBusCode());
+						if (busOfAgency != null) {
+
+							Trip trip = new Trip().setAgency(agency).setBus(busOfAgency).setDestStop(stopArrival)
+									.setSourceStop(stopDepart).setFare(tripDto.getFare())
+									.setJourneyTime(tripDto.getJourneyTime());
+							trips.add(TripMapper.toTripMapper(tripRepository.save(trip)));
+
+							return trips;
+						}
+						throw exception(EntityType.BUS, ExceptionType.ENTITY_NOT_FOUND, tripDto.getBusCode());
+					}
+					throw exception(EntityType.AGENCY, ExceptionType.ENTITY_NOT_FOUND, tripDto.getAgencyCode());
+				}
+				throw exception(EntityType.STOP, ExceptionType.ENTITY_NOT_FOUND, tripDto.getSourceStopCode());
+			}
+			throw exception(EntityType.AGENCY, ExceptionType.ENTITY_NOT_FOUND, tripDto.getDestinationStopCode());
+		}
+		return trips;
+
+	}
+
+	private Bus getBusOfAgency(String busCode) {
+
+		return busRepository.findBusByCode(busCode);
+	}
+
+	@Override
+	public List<TripDto> getAgencyTrip(String agencyCode) {
+		Agency agency = getAgencyCode(agencyCode);
+
+		if (agency != null) {
+			List<Trip> listOfTrips = tripRepository.findTripByAgency(agency);
+
+			if (!listOfTrips.isEmpty()) {
+				return listOfTrips.stream().distinct().map(trip -> TripMapper.toTripMapper(trip))
+						.collect(Collectors.toList());
+			}
+			return Collections.emptyList();
+		}
+		throw exception(EntityType.AGENCY, ExceptionType.ENTITY_NOT_FOUND, agencyCode);
 	}
 
 	/**
@@ -153,6 +272,15 @@ public class BusReservationServiceImpl implements BusReservationService {
 
 	private Agency getAgencyCode(String code) {
 		return agencyRepository.getAgencyByCode(code);
+
+	}
+
+	/**
+	 * @param codeStop
+	 * @return
+	 */
+	private Stop getStop(String codeStop) {
+		return stopRepository.findStopByCode(codeStop);
 
 	}
 

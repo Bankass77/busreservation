@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.busreseravtionsystem.busreservation.dto.mapper.UserMapper;
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
@@ -22,9 +23,9 @@ import com.busreseravtionsystem.busreservation.model.user.User;
 import com.busreseravtionsystem.busreservation.model.user.UserRole;
 import com.busreseravtionsystem.busreservation.repository.user.RoleRepository;
 import com.busreseravtionsystem.busreservation.repository.user.UserRepository;
-import com.busreseravtionsystem.busreservation.service.bus.BusReservationService;
 
 @Service("userService")
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired

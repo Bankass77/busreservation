@@ -16,7 +16,7 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 	 * @param agency
 	 * @return
 	 */
-	Trip findTripByAgency(Agency agency);
+	List<Trip> findTripByAgency(Agency agency);
 
 	/**
 	 * 

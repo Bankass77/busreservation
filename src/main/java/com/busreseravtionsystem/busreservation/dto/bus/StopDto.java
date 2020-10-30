@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StopDto implements Comparable<Object> {
 
-	private long code;
+	private String code;
 
 	private String name;
 

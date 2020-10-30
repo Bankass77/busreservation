@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BusDto {
 
-	private long code;
+	private String code;
 
 	private int capacity;
 
