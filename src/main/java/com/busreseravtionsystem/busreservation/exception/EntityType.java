@@ -6,6 +6,7 @@ public enum EntityType {
 	ROLE,
 	AGENCY,
 	BUS,
+	STOP,
 	TRIP, 
 	TRIPSCHEDULE
 

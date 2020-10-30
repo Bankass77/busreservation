@@ -1,5 +1,7 @@
 package com.busreseravtionsystem.busreservation.service.user;
 
+import java.util.List;
+
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
 
 public interface UserService {
@@ -35,4 +37,7 @@ public interface UserService {
 	 * @return
 	 */
   UserDto changePassword (UserDto userDto, String newPassword);
+  
+  
+  List<UserDto> getAllUsers();
 }

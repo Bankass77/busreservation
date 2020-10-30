@@ -8,8 +8,6 @@ import com.busreseravtionsystem.busreservation.dto.bus.StopDto;
 import com.busreseravtionsystem.busreservation.dto.bus.TripDto;
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
 
-import antlr.collections.List;
-
 public interface BusReservationService {
 	/**
 	 * 
