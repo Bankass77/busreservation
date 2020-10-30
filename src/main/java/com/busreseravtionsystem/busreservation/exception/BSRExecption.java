@@ -58,7 +58,7 @@ public class BSRExecption {
 	 * @return
 	 */
 	public static RuntimeException thRuntimeExceptionWithId(EntityType entityType, ExceptionType exceptionType,
-			 Integer id, String... args) {
+			Integer id, String... args) {
 
 		String messageTemplate = getMessageTemplate(entityType, exceptionType).concat(".").concat(id.toString());
 		return throwException(exceptionType, messageTemplate, args);

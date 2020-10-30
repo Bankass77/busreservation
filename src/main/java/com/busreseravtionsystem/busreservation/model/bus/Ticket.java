@@ -22,27 +22,26 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Entity
-@Table (schema = "bankass", name = "ticket")
+@Table(schema = "bankass", name = "ticket")
 public class Ticket {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ticket_id")
-	private long  id;
-	
+	private long id;
+
 	@Column(name = "seat_number")
 	private int seatNumber;
-	
+
 	@Column(name = "journey_date")
 	private String journeyDate;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "trip_schedule_id")
 	private TripSchedule tripSchedule;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "users_id")
 	private User passenger;
 
-  
 }

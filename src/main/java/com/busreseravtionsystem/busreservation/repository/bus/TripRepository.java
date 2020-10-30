@@ -10,28 +10,28 @@ import com.busreseravtionsystem.busreservation.model.bus.Stop;
 import com.busreseravtionsystem.busreservation.model.bus.Trip;
 
 public interface TripRepository extends JpaRepository<Trip, Long> {
-	
+
 	/**
 	 * 
 	 * @param agency
 	 * @return
 	 */
-	Trip findTripByAgency (Agency agency);
+	Trip findTripByAgency(Agency agency);
 
-/**
- * 
- * @param stopSource
- * @param stopDest
- * @param bus
- * @return
- */
- Trip findBySourceStopAndDestStopAndBus( Stop stopSource, Stop stopDest, Bus bus);
-	
+	/**
+	 * 
+	 * @param stopSource
+	 * @param stopDest
+	 * @param bus
+	 * @return
+	 */
+	Trip findBySourceStopAndDestStopAndBus(Stop stopSource, Stop stopDest, Bus bus);
+
 	/**
 	 * 
 	 * @param sourceStop
 	 * @param destStop
 	 * @return
 	 */
-	List<Trip> findAllBySourceStopAndDestStop (Stop sourceStop, Stop destStop);
+	List<Trip> findAllBySourceStopAndDestStop(Stop sourceStop, Stop destStop);
 }

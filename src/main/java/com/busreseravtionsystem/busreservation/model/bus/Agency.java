@@ -32,26 +32,24 @@ import lombok.extern.slf4j.Slf4j;
 @Table(schema = "bankass", name = "agency", indexes = @Index(unique = true, columnList = "code", name = "idx_agency_code"))
 public class Agency {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ageny_id")
 	private long id;
-	
+
 	@Column
 	private String code;
-	
+
 	@Column
 	private String name;
-	
+
 	@Column
 	private String details;
-	
+
 	@ManyToOne
 	private User user;
-	
-	@OneToMany(mappedBy ="agency" ,fetch = FetchType.LAZY)
-	private Set<Bus> buses; 
-	
-	
+
+	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY)
+	private Set<Bus> buses;
+
 }

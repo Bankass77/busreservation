@@ -36,9 +36,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@Autowired
-	private BusReservationService busReservationService;
-
 	@Override
 	public UserDto signup(UserDto userDto) {
 
@@ -62,7 +59,6 @@ public class UserServiceImpl implements UserService {
 		}
 		throw exception(EntityType.USER, ExceptionType.DUPLICATE_ENTITY, userDto.getEmail());
 	}
-
 
 	@Override
 	public UserDto findUserByEmail(String email) {
@@ -120,14 +116,11 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-
 	@Override
 	public List<UserDto> getAllUsers() {
-		
-		return StreamSupport.stream(userRepository.findAll().spliterator(), false)
-				.distinct()
-				.map(users-> (modelMapper.map(users, UserDto.class)))
-				.collect(Collectors.toCollection(ArrayList::new));
+
+		return StreamSupport.stream(userRepository.findAll().spliterator(), false).distinct()
+				.map(users -> (modelMapper.map(users, UserDto.class))).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 }

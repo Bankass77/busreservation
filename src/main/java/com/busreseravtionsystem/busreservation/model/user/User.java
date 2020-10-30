@@ -34,8 +34,8 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
-@Table (schema = "bankass", name = "users",uniqueConstraints =@UniqueConstraint(columnNames={"users_id"}),
-      indexes = @Index(columnList = "email", name = "idx_users_email",unique = true))
+@Table(schema = "bankass", name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {
+		"users_id" }), indexes = @Index(columnList = "email", name = "idx_users_email", unique = true))
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class User  implements Serializable{
+public class User implements Serializable {
 	/**
 	 * 
 	 */
@@ -56,52 +56,52 @@ public class User  implements Serializable{
 	private long id;
 
 	@NonNull
-	@Column(name = "first_name",updatable = true)
+	@Column(name = "first_name", updatable = true)
 	@NotBlank
-	@NotEmpty(message="First name is required")
+	@NotEmpty(message = "First name is required")
 	private String firstName;
 
 	@NonNull
 	@Column(name = "last_name", updatable = true)
 	@NotBlank
-	@NotEmpty(message="Last name is required")
+	@NotEmpty(message = "Last name is required")
 	private String lastName;
 
 	@NonNull
 	@Column
 	@Email
 	@NotBlank
-	@NotEmpty(message=" email is required")
+	@NotEmpty(message = " email is required")
 	private String email;
 
 	@NonNull
 	@Column
 	@NotBlank
-	@NotEmpty(message=" password  is required")
+	@NotEmpty(message = " password  is required")
 	private String password;
 
 	@NonNull
-	@Column(name = "mobile_number",updatable = true)
+	@Column(name = "mobile_number", updatable = true)
 	@NotBlank
-	@NotEmpty(message=" mobile number is required")
+	@NotEmpty(message = " mobile number is required")
 	/*
 	 * @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$",
 	 * message="Mobile number is invalid")
 	 */
 	private String mobileNumber;
 
-
-	//User role
-	@ManyToMany (mappedBy ="users" ,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	// User role
+	@ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@Enumerated(EnumType.STRING)
 	@ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
-	//@CollectionTable (schema = "bankass",name = "user_role", joinColumns = @JoinColumn(name="_id"))
-	@JoinTable(schema = "bankass",name = "users_role",joinColumns = {@JoinColumn(name="users_id")} , inverseJoinColumns = {@JoinColumn(name="role_id")})
+	// @CollectionTable (schema = "bankass",name = "user_role", joinColumns =
+	// @JoinColumn(name="_id"))
+	@JoinTable(schema = "bankass", name = "users_role", joinColumns = {
+			@JoinColumn(name = "users_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private Set<Role> roles;
 
-	public String getFullName()
-	{
-		return firstName !=null? firstName.concat("").concat("lastName"): "";
+	public String getFullName() {
+		return firstName != null ? firstName.concat("").concat("lastName") : "";
 
 	}
 }

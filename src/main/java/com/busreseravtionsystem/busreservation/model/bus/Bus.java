@@ -25,26 +25,25 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Accessors(chain = true)
 @Entity
-@Table(schema = "bankass", name = "bus", indexes = @Index(columnList = "code",name = "idx_bus_code", unique = true))
+@Table(schema = "bankass", name = "bus", indexes = @Index(columnList = "code", name = "idx_bus_code", unique = true))
 public class Bus {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "bus_id")
 	private long id;
-	
+
 	@Column
 	private String code;
-	
+
 	@Column
 	private int capacity;
-	
+
 	@Column
 	private String make;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "agency_id")
 	private Agency agency;
-	
 
 }

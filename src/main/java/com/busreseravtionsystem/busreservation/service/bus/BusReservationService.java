@@ -14,29 +14,27 @@ public interface BusReservationService {
 	 * @return all Stop of bus
 	 */
 	Set<StopDto> getAllStopDtos();
-	
+
 	/**
 	 * 
 	 * @param stopCode
-	 * @return  code of stop
+	 * @return code of stop
 	 */
-	StopDto getStopByCode (String stopCode);
-	
+	StopDto getStopByCode(String stopCode);
+
 	/**
 	 * 
 	 * @param userDto
 	 * @return agency
 	 */
 	AgencyDto getAgency(UserDto userDto);
-	
-	
+
 	/**
 	 * 
 	 * @param agencyDto
 	 * @return agency
 	 */
-	AgencyDto addAgency (AgencyDto agencyDto);
-	
+	AgencyDto addAgency(AgencyDto agencyDto);
 
 	/**
 	 * 
@@ -45,13 +43,13 @@ public interface BusReservationService {
 	 * @return
 	 */
 	AgencyDto updateAgency(AgencyDto agencyDto, BusDto busDto);
-	
+
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
-	TripDto getTripById (Long id);
-	
-     java.util.List<TripDto> addTrip(TripDto tripDto);
+	TripDto getTripById(Long id);
+
+	java.util.List<TripDto> addTrip(TripDto tripDto);
 }

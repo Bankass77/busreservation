@@ -6,7 +6,7 @@ import com.busreseravtionsystem.busreservation.model.user.Role;
 import com.busreseravtionsystem.busreservation.model.user.UserRole;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
-	
-	Role findByRole (UserRole userRole);
+
+	Role findByRole(UserRole userRole);
 
 }

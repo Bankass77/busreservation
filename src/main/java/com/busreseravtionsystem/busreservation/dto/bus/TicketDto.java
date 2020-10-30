@@ -36,5 +36,5 @@ public class TicketDto {
 
 	private String passengerName;
 	private String passengerMobileNumber;
-    
+
 }

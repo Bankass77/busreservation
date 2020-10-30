@@ -8,16 +8,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BSRConfiguration {
-	
+
 	@Bean
-	public ModelMapper modelMapper () {
-		
+	public ModelMapper modelMapper() {
+
 		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setFieldAccessLevel(AccessLevel.PRIVATE)
-		.setFieldMatchingEnabled(true)
-		.setSourceNamingConvention(NamingConventions.JAVABEANS_MUTATOR);
+		modelMapper.getConfiguration().setFieldAccessLevel(AccessLevel.PRIVATE).setFieldMatchingEnabled(true)
+				.setSourceNamingConvention(NamingConventions.JAVABEANS_MUTATOR);
 		return modelMapper;
-		
+
 	}
 
 }

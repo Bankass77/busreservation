@@ -3,8 +3,6 @@
  */
 package com.busreseravtionsystem.busreservation.dto.response;
 
-
-
 import com.busreseravtionsystem.busreservation.util.DateUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -25,7 +23,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @JsonInclude(content = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Response <T>{
+public class Response<T> {
 	private Status status;
 
 	private T payload;
@@ -34,90 +32,81 @@ public class Response <T>{
 
 	private Object metadata;
 
-	private static<T> Response<T> badRequest(){
+	private static <T> Response<T> badRequest() {
 
-		Response<T> response= new Response<>();
+		Response<T> response = new Response<>();
 		response.setStatus(Status.BAD_REQUEST);
 
 		return response;
 
-
 	}
 
-	private static<T> Response<T> ok(){
+	private static <T> Response<T> ok() {
 
-		Response< T> response= new Response<T> ();
+		Response<T> response = new Response<T>();
 		response.setStatus(Status.OK);
 		return response;
 	}
 
-	private static<T> Response<T> unauthorized(){
+	private static <T> Response<T> unauthorized() {
 
-
-		Response<T> response  = new  Response<T> ();
+		Response<T> response = new Response<T>();
 		response.setStatus(Status.UNAUTHORIZED);
-		return response  ;
-
+		return response;
 
 	}
 
-
-	private static <T> Response<T> validateException(){
+	private static <T> Response<T> validateException() {
 		Response<T> response = new Response<>();
 
 		response.setStatus(Status.VALIDATION_EXCEPTION);
-		return response ;
+		return response;
 
 	}
 
-
-	private static <T> Response<T>	exception(){
-
+	private static <T> Response<T> exception() {
 
 		Response<T> response = new Response<>();
 		response.setStatus(Status.EXCEPTION);
-		return response ;
-
+		return response;
 
 	}
 
-	private static <T> Response<T> wrongCredentials(){
+	private static <T> Response<T> wrongCredentials() {
 
-		Response<T> response= new Response<>();
+		Response<T> response = new Response<>();
 		response.setStatus(Status.WRONG_CREDENTIALS);
 		return response;
 	}
 
+	private static <T> Response<T> accessDenied() {
 
-	private static <T> Response<T> accessDenied(){
-
-		Response<T> response= new Response<>();
+		Response<T> response = new Response<>();
 
 		response.setStatus(Status.ACCESS_DENIED);
 		return response;
 	}
 
+	private static <T> Response<T> notFound() {
 
-	private static<T> Response<T> notFound(){
-
-		Response<T> response= new Response<>();
+		Response<T> response = new Response<>();
 		response.setStatus(Status.NOT_FOUND);
 		return response;
 	}
 
-	private static<T> Response<T> duplicateEntity(){
+	private static <T> Response<T> duplicateEntity() {
 
-		Response<T> response= new Response<>();
+		Response<T> response = new Response<>();
 		response.setStatus(Status.DUPLICATE_ENTITY);
 
 		return response;
 	}
+
 	public enum Status {
 
-		OK, BAD_REQUEST, UNAUTHORIZED, VALIDATION_EXCEPTION, EXCEPTION, WRONG_CREDENTIALS,  ACCESS_DENIED, NOT_FOUND, DUPLICATE_ENTITY
+		OK, BAD_REQUEST, UNAUTHORIZED, VALIDATION_EXCEPTION, EXCEPTION, WRONG_CREDENTIALS, ACCESS_DENIED, NOT_FOUND,
+		DUPLICATE_ENTITY
 	}
-
-
 
 	public void addErrorMsgToResponse(String msgError, Exception e) {
 
@@ -128,13 +117,12 @@ public class Response <T>{
 		setErrors(responseError);
 	}
 
-
 	@Getter
 	@Setter
 	@Accessors(chain = true)
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	@JsonInclude(content = Include.NON_NULL)
-	public static class PageMetada{
+	public static class PageMetada {
 
 		private final int size;
 
@@ -150,7 +138,6 @@ public class Response <T>{
 			this.totalPages = totalPages;
 			this.number = number;
 		}
-
 
 	}
 }

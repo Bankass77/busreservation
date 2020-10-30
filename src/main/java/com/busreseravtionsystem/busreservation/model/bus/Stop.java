@@ -20,25 +20,22 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @AllArgsConstructor
 @Slf4j
-@Table(schema = "bankass", name = "stop", indexes = @Index(columnList = "code", name = "idx_stop_code",unique = true))
+@Table(schema = "bankass", name = "stop", indexes = @Index(columnList = "code", name = "idx_stop_code", unique = true))
 @Entity
 @Accessors(chain = true)
 public class Stop {
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "stop_id")
 	private long id;
 
 	@Column
-	 private String code;
+	private String code;
 	@Column
-	 private String detail;
-	
+	private String detail;
+
 	@Column
-	 private String name;
-	 
-	
+	private String name;
 
 }

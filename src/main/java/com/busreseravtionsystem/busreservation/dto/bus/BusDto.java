@@ -21,10 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 public class BusDto {
 
 	private long code;
-	
+
 	private int capacity;
-	
+
 	private String make;
 
-	
 }
