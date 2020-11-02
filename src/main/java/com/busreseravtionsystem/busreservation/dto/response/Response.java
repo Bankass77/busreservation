@@ -41,7 +41,7 @@ public class Response<T> {
 
 	}
 
-	private static <T> Response<T> ok() {
+	public static <T> Response<T> ok() {
 
 		Response<T> response = new Response<T>();
 		response.setStatus(Status.OK);
