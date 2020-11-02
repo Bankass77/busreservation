@@ -17,8 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.busreseravtionsystem.busreservation.dto.bus.AgencyDto;
 import com.busreseravtionsystem.busreservation.dto.bus.BusDto;
 import com.busreseravtionsystem.busreservation.dto.bus.StopDto;
+import com.busreseravtionsystem.busreservation.dto.bus.TicketDto;
 import com.busreseravtionsystem.busreservation.dto.bus.TripDto;
+import com.busreseravtionsystem.busreservation.dto.bus.TripScheduleDto;
+import com.busreseravtionsystem.busreservation.dto.mapper.TicketMapper;
 import com.busreseravtionsystem.busreservation.dto.mapper.TripMapper;
+import com.busreseravtionsystem.busreservation.dto.mapper.TripScheduleMapper;
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
 import com.busreseravtionsystem.busreservation.exception.BSRExecption;
 import com.busreseravtionsystem.busreservation.exception.EntityType;
@@ -26,7 +30,9 @@ import com.busreseravtionsystem.busreservation.exception.ExceptionType;
 import com.busreseravtionsystem.busreservation.model.bus.Agency;
 import com.busreseravtionsystem.busreservation.model.bus.Bus;
 import com.busreseravtionsystem.busreservation.model.bus.Stop;
+import com.busreseravtionsystem.busreservation.model.bus.Ticket;
 import com.busreseravtionsystem.busreservation.model.bus.Trip;
+import com.busreseravtionsystem.busreservation.model.bus.TripSchedule;
 import com.busreseravtionsystem.busreservation.model.user.User;
 import com.busreseravtionsystem.busreservation.repository.bus.AgencyRepository;
 import com.busreseravtionsystem.busreservation.repository.bus.BusRepository;
@@ -282,6 +288,119 @@ public class BusReservationServiceImpl implements BusReservationService {
 	private Stop getStop(String codeStop) {
 		return stopRepository.findStopByCode(codeStop);
 
+	}
+
+	@Override
+	public List<TripDto> getAvailableTripBetweenStops(String sourceStopCode, String arrivalStopCode) {
+
+		Optional<Stop> sourceStop = Optional.ofNullable(stopRepository.findStopByCode(sourceStopCode));
+
+		if (sourceStop.isPresent()) {
+
+			Optional<Stop> arrivalStop = Optional.ofNullable(stopRepository.findStopByCode(arrivalStopCode));
+
+			if (arrivalStop.isPresent()) {
+
+				List<Trip> availableTrips = tripRepository.findAllBySourceStopAndDestStop(sourceStop.get(),
+						arrivalStop.get());
+
+				if (!availableTrips.isEmpty()) {
+
+					return availableTrips.stream().map(trip -> TripMapper.toTripMapper(trip))
+							.collect(Collectors.toCollection(ArrayList::new));
+				}
+
+				return Collections.emptyList();
+			}
+			throw exception(EntityType.STOP, ExceptionType.ENTITY_NOT_FOUND, arrivalStopCode);
+		}
+
+		throw exception(EntityType.STOP, ExceptionType.ENTITY_NOT_FOUND, sourceStopCode);
+	}
+
+	@Override
+	public TripScheduleDto getTripScheduleDto(TripDto tripDto, String tripDate, boolean createSchedForTrip) {
+
+		Optional<Trip> trip = tripRepository.findById(tripDto.getId());
+		if (trip.isPresent()) {
+
+			Optional<TripSchedule> tripSchedule = Optional
+					.ofNullable(tripSchedulerepositoiry.findTripScheduleByTripDetailAndTripDate(trip.get(), tripDate));
+			if (tripSchedule.isPresent()) {
+				return TripScheduleMapper.tripScheduleDto(tripSchedule.get());
+
+			} else if (createSchedForTrip) {
+
+				TripSchedule tripSchedule2 = new TripSchedule().setTripDetail(trip.get()).setTripDate(tripDate)
+						.setAvailableSeats(trip.get().getBus().getCapacity());
+				return TripScheduleMapper.tripScheduleDto(tripSchedulerepositoiry.save(tripSchedule2));
+			}
+		}
+		throw exception(EntityType.TRIP, ExceptionType.ENTITY_NOT_FOUND, String.valueOf(tripDto.getId()));
+	}
+
+	@Override
+	public List<TripScheduleDto> getAvailableTripSchedules(String sourceStop, String arrivalStop, String tripDate) {
+
+		List<Trip> availableTrips = findTripsBetweenStops(sourceStop, arrivalStop);
+
+		if (!availableTrips.isEmpty()) {
+			return availableTrips.stream()
+					.map(trip -> getTripScheduleDto(TripMapper.toTripMapper(trip), tripDate, true))
+					.filter(tripScheduleDtao -> tripScheduleDtao != null).collect(Collectors.toList());
+
+		}
+		return Collections.emptyList();
+	}
+
+	@Override
+	public TicketDto bookTicket(TripScheduleDto tripScheduleDto, UserDto passenger) {
+
+		User user = getUser(passenger.getEmail());
+
+		if (user != null) {
+
+			Optional<TripSchedule> trOptional = tripSchedulerepositoiry.findById(tripScheduleDto.getTripId());
+
+			if (trOptional.isPresent()) {
+
+				Ticket ticket = new Ticket().setJourneyDate(trOptional.get().getTripDate()).setPassenger(user)
+						.setTripSchedule(trOptional.get())
+						.setSeatNumber(trOptional.get().getTripDetail().getBus().getCapacity()
+								- trOptional.get().getAvailableSeats());
+				ticketrepository.save(ticket);
+				trOptional.get().setAvailableSeats(trOptional.get().getAvailableSeats() - 1); // On duminie de -1 le
+																								// nombre de sièges
+				tripSchedulerepositoiry.save(trOptional.get()); // On met à jour le planning
+				return TicketMapper.toTicketDto(ticket);
+			}
+		}
+
+		throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, user.getEmail());
+
+	}
+
+	private List<Trip> findTripsBetweenStops(String sourceStop, String arrivalStop) {
+
+		Optional<Stop> sourceStop2 = Optional.ofNullable(stopRepository.findStopByCode(sourceStop));
+
+		if (sourceStop2.isPresent()) {
+			Optional<Stop> arrivalStop2 = Optional.ofNullable(stopRepository.findStopByCode(arrivalStop));
+
+			if (arrivalStop2.isEmpty()) {
+				List<Trip> availablesTrips = tripRepository.findAllBySourceStopAndDestStop(sourceStop2.get(),
+						arrivalStop2.get());
+
+				if (!availablesTrips.isEmpty()) {
+
+					return Collections.emptyList();
+				}
+
+				throw exception(EntityType.STOP, ExceptionType.ENTITY_NOT_FOUND, sourceStop);
+			}
+
+		}
+		throw exception(EntityType.STOP, ExceptionType.ENTITY_EXCEPTION, arrivalStop);
 	}
 
 }

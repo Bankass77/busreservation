@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import com.busreseravtionsystem.busreservation.dto.mapper.UserMapper;
 import com.busreseravtionsystem.busreservation.model.bus.Agency;
 import com.busreseravtionsystem.busreservation.model.bus.Bus;
 import com.busreseravtionsystem.busreservation.model.bus.Stop;
@@ -26,6 +27,7 @@ import com.busreseravtionsystem.busreservation.repository.bus.TripRepository;
 import com.busreseravtionsystem.busreservation.repository.bus.TripScheduleRepository;
 import com.busreseravtionsystem.busreservation.repository.user.RoleRepository;
 import com.busreseravtionsystem.busreservation.repository.user.UserRepository;
+import com.busreseravtionsystem.busreservation.service.user.UserService;
 import com.busreseravtionsystem.busreservation.util.DateUtils;
 
 @SpringBootApplication
@@ -40,7 +42,7 @@ public class BusreservationApplication {
 	@Bean
 	CommandLineRunner init(RoleRepository roleRepository, UserRepository userRepository, StopRepository stopRepository,
 			AgencyRepository agencyRepository, BusRepository busRepository, TripRepository tripRepository,
-			TripScheduleRepository tripScheduleRepository) {
+			TripScheduleRepository tripScheduleRepository, UserService userService) {
 		return args -> {
 			// Create Admin and Passenger Roles
 			Role adminRole = roleRepository.findByRole(UserRole.ADMIN);
@@ -58,7 +60,7 @@ public class BusreservationApplication {
 				roleRepository.save(userRole);
 			}
 
-			// Create an Admin user
+			// Create a first Admin user
 			User admin = userRepository.findByEmail("admin@gmail.com");
 			if (admin == null) {
 				admin = new User().setEmail("admin@gmail.com").setPassword("admin1") // "123456"
@@ -66,6 +68,23 @@ public class BusreservationApplication {
 						.setRoles(new HashSet<Role>(Arrays.asList(adminRole)));
 				// .setRoles(Arrays.asList(adminRole));
 				userRepository.save(admin);
+			}
+			
+			
+			// Crete a second admin user
+			
+			User  admin2= userRepository.findByEmail("admin2@example.com");
+			
+			if(admin2 ==null) {
+				
+				admin2=new User().setEmail("admin2@example.com")
+						.setFirstName("Boubacar")
+						.setLastName("Guindo")
+						.setMobileNumber("0789563445")
+						.setPassword("admin2")
+						.setRoles(new HashSet<Role> (Arrays.asList(adminRole)));
+				
+				userService.signup(UserMapper.userDto(admin2));
 			}
 
 			// Create a passenger user
