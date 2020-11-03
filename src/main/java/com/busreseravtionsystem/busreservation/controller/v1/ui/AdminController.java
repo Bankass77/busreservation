@@ -54,6 +54,7 @@ public class AdminController {
 		} else {
 			try {
 				UserDto newUser = registerAdmin(adminSignupFormCommand);
+				 
 			} catch (Exception e) {
 				result.rejectValue("email", "error.adminSignupFormCommand", e.getMessage());
 			}

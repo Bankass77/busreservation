@@ -10,6 +10,7 @@ import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
 	private RoleRepository roleRepository;
@@ -81,8 +85,7 @@ public class UserServiceImpl implements UserService {
 		if (uOptional.isPresent()) {
 
 			User user = uOptional.get().setEmail(userDto.getEmail()).setFirstName(userDto.getFirstName())
-					.setLastName(userDto.getLastName()).setMobileNumber(userDto.getMobileNumber())
-					.setPassword(userDto.getPassword()).setRoles(userDto.getRoles());
+					.setLastName(userDto.getLastName()).setMobileNumber(userDto.getMobileNumber());
 
 			return UserMapper.userDto(userRepository.save(user));
 		}
@@ -97,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
 		if (userChangepassword.isPresent()) {
 
-			User password = userChangepassword.get().setPassword(newPassword);
+			User password = userChangepassword.get().setPassword(passwordEncoder.encode(newPassword));
 			return UserMapper.userDto(userRepository.save(password));
 
 		}
