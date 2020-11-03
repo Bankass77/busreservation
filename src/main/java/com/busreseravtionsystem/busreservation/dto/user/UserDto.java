@@ -36,6 +36,6 @@ public class UserDto {
 	private String mobileNumber;
 
 	private boolean isAdmin;
-	private Set<Role> roles;
+	private Set<RoleDto> rolesDtos;
 
 }

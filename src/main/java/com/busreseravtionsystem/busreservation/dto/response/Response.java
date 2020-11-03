@@ -24,15 +24,15 @@ import lombok.experimental.Accessors;
 @JsonInclude(content = Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Response<T> {
-	private Status status;
+	public Status status;
 
-	private T payload;
+	public T payload;
 
-	private Object errors;
+	public Object errors;
 
-	private Object metadata;
+	public Object metadata;
 
-	private static <T> Response<T> badRequest() {
+	public static <T> Response<T> badRequest() {
 
 		Response<T> response = new Response<>();
 		response.setStatus(Status.BAD_REQUEST);
@@ -48,7 +48,7 @@ public class Response<T> {
 		return response;
 	}
 
-	private static <T> Response<T> unauthorized() {
+	public static <T> Response<T> unauthorized() {
 
 		Response<T> response = new Response<T>();
 		response.setStatus(Status.UNAUTHORIZED);
@@ -56,7 +56,7 @@ public class Response<T> {
 
 	}
 
-	private static <T> Response<T> validateException() {
+	public static <T> Response<T> validateException() {
 		Response<T> response = new Response<>();
 
 		response.setStatus(Status.VALIDATION_EXCEPTION);
@@ -64,7 +64,7 @@ public class Response<T> {
 
 	}
 
-	private static <T> Response<T> exception() {
+	public static <T> Response<T> exception() {
 
 		Response<T> response = new Response<>();
 		response.setStatus(Status.EXCEPTION);
@@ -72,14 +72,14 @@ public class Response<T> {
 
 	}
 
-	private static <T> Response<T> wrongCredentials() {
+	public static <T> Response<T> wrongCredentials() {
 
 		Response<T> response = new Response<>();
 		response.setStatus(Status.WRONG_CREDENTIALS);
 		return response;
 	}
 
-	private static <T> Response<T> accessDenied() {
+	public static <T> Response<T> accessDenied() {
 
 		Response<T> response = new Response<>();
 
@@ -87,14 +87,14 @@ public class Response<T> {
 		return response;
 	}
 
-	private static <T> Response<T> notFound() {
+	public static <T> Response<T> notFound() {
 
 		Response<T> response = new Response<>();
 		response.setStatus(Status.NOT_FOUND);
 		return response;
 	}
 
-	private static <T> Response<T> duplicateEntity() {
+	public static <T> Response<T> duplicateEntity() {
 
 		Response<T> response = new Response<>();
 		response.setStatus(Status.DUPLICATE_ENTITY);
@@ -124,12 +124,12 @@ public class Response<T> {
 	@JsonInclude(content = Include.NON_NULL)
 	public static class PageMetada {
 
-		private final int size;
+		public final int size;
 
-		private final long totalElements;
-		private final int totalPages;
+		public final long totalElements;
+		public final int totalPages;
 
-		private final int number;
+		public final int number;
 
 		public PageMetada(int size, long totalElements, int totalPages, int number) {
 			super();
