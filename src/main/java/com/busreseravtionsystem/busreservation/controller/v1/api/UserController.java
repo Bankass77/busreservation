@@ -23,6 +23,10 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * @param userSignupRequest
+	 * @return
+	 */
 	@PostMapping("/signup")
 	private Response signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
 
@@ -30,6 +34,11 @@ public class UserController {
 
 	}
 
+	/**
+	 * @param userSignupRequest
+	 * @param b
+	 * @return
+	 */
 	private UserDto registerUser(@Valid UserSignupRequest userSignupRequest, boolean b) {
 
 		UserDto userDto = new UserDto().setEmail(userSignupRequest.getEmail())
