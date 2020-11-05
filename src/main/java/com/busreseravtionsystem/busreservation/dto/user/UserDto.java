@@ -37,5 +37,10 @@ public class UserDto {
 
 	private boolean isAdmin;
 	private Set<RoleDto> rolesDtos;
+	
+	public String getFullName() {
+		
+		return firstName !=null ?firstName.concat(" ").concat(lastName):" ";
+	}
 
 }

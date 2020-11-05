@@ -22,7 +22,7 @@ public class CustomAuthentionSuccesshandler implements AuthenticationSuccessHand
 
 			if ("ADMIN".equals(auth.getAuthority())) {
 
-				response.sendRedirect("/dashbord");
+				response.sendRedirect("/dashboard");
 			}
 
 		}
