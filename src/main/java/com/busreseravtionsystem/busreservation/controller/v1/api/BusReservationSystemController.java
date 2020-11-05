@@ -5,11 +5,11 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +48,8 @@ public class BusReservationSystemController {
 
 	}
 
+	@GetMapping("tripsbystops")
+	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
 	public Response<Object> getripByStops(@RequestBody @Valid GetripSchedulesRequest getTripSchedulesRequest) {
 
 		List<TripScheduleDto> dtos = busReservationService.getAvailableTripSchedules(
@@ -84,6 +86,8 @@ public class BusReservationSystemController {
 
 	}
 
+	@PostMapping("/bookticket")
+	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
 	public Response<Object> bookTicket(@RequestBody @Valid BookTicketRequest bookTicketRequest) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
