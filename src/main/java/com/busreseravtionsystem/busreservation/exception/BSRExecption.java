@@ -43,6 +43,11 @@ public class BSRExecption {
 	}
 
 	public static class EntityNotFoundException extends RuntimeException {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public EntityNotFoundException(String message) {
 
 			super(message);
@@ -85,6 +90,11 @@ public class BSRExecption {
 	}
 
 	public static class DuplicateEntityException extends RuntimeException {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		public DuplicateEntityException(String message) {
 			super(message);

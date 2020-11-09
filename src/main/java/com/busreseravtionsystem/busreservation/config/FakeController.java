@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @Api(value = "bsr-application", description = "Operation pertaining to user login and logout in the BSR application")
 public class FakeController {
 
-	@ApiOperation("login")
+	@ApiOperation("Login")
 	@PostMapping("/auth")
 	public void fakeLogin(@RequestBody @Valid LoginRequest loginRequest) {
 
@@ -32,7 +32,7 @@ public class FakeController {
 	}
 
 	
-	@ApiOperation(value = "logout")
+	@ApiOperation(value = "Logout")
 	@PostMapping(value = "/logout")
 	private void logout() {
 		

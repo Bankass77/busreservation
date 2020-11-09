@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -68,6 +67,7 @@ public class ApiJWTAuthorizationFilter extends BasicAuthenticationFilter {
 			// On extrait le user
 			String user = claims.getSubject();
 			// on extrait le role
+			@SuppressWarnings("unchecked")
 			ArrayList<String> roles = (ArrayList<String>) claims.get("roles");
 
 			// Ensuite on converti le Role GrantedAuthority object pour l'injecter

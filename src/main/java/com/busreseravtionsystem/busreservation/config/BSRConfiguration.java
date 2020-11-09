@@ -33,7 +33,7 @@ public class BSRConfiguration {
 	@Bean
 	public Docket swaggerBSRApi() {
 
-		return new Docket(DocumentationType.SWAGGER_2).groupName("BSR").select()
+		return new Docket(DocumentationType.SWAGGER_2).groupName("BRS").select()
 				.apis(RequestHandlerSelectors.basePackage("com.busreseravtionsystem.busreservation.controller.v1.api"))
 				.paths(PathSelectors.any()).build().apiInfo(apiInfo()).securitySchemes(Arrays.asList(apiKey()));
 	}

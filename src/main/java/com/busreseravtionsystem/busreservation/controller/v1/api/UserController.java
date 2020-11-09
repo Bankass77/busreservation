@@ -28,7 +28,7 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/signup")
-	private Response signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
+	private Response<Object> signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
 
 		return Response.ok().setPayload(registerUser(userSignupRequest, false));
 

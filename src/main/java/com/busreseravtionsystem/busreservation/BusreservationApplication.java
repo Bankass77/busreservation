@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.busreseravtionsystem.busreservation.dto.mapper.UserMapper;
 import com.busreseravtionsystem.busreservation.model.bus.Agency;
 import com.busreseravtionsystem.busreservation.model.bus.Bus;
 import com.busreseravtionsystem.busreservation.model.bus.Stop;
@@ -32,17 +31,21 @@ import com.busreseravtionsystem.busreservation.repository.user.UserRepository;
 import com.busreseravtionsystem.busreservation.service.user.UserService;
 import com.busreseravtionsystem.busreservation.util.DateUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableJpaAuditing
+@Slf4j
 public class BusreservationApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BusreservationApplication.class, args);
+		log.info("Bus reservation System started",BusreservationApplication.class);
 	}
 
 	
-	/***@Autowired
+@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Bean
 	CommandLineRunner init(RoleRepository roleRepository, UserRepository userRepository, StopRepository stopRepository,
@@ -75,18 +78,21 @@ public class BusreservationApplication {
 				userRepository.save(admin);
 			}
 
-			// Crete a second admin user
-
-			User admin2 = userRepository.findByEmail("admin2@example.com");
-
-			if (admin2 == null) {
-
-				admin2 = new User().setEmail("admin2@example.com").setFirstName("Boubacar").setLastName("Guindo")
-						.setMobileNumber("0789563445").setPassword(bCryptPasswordEncoder.encode("admin2"))
-						.setRoles(new HashSet<Role>(Arrays.asList(adminRole)));
-
-				userService.signup(UserMapper.userDto(admin2));
-			}
+			/*
+			 * // Crete a second admin user
+			 * 
+			 * User admin2 = userRepository.findByEmail("admin2@example.com");
+			 * 
+			 * if (admin2 == null) {
+			 * 
+			 * admin2 = new
+			 * User().setEmail("admin2@example.com").setFirstName("Boubacar").setLastName(
+			 * "Guindo")
+			 * .setMobileNumber("0789563445").setPassword(bCryptPasswordEncoder.encode(
+			 * "admin2")) .setRoles(new HashSet<Role>(Arrays.asList(adminRole)));
+			 * 
+			 * userService.signup(UserMapper.userDto(admin2)); }
+			 */
 
 			// Create a passenger user
 			User passenger = userRepository.findByEmail("passenger@gmail.com");
@@ -164,5 +170,5 @@ public class BusreservationApplication {
 			}
 		};
 	}
-***/
+
 }

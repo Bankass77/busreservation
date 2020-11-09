@@ -10,7 +10,6 @@ import com.busreseravtionsystem.busreservation.dto.bus.TicketDto;
 import com.busreseravtionsystem.busreservation.dto.bus.TripDto;
 import com.busreseravtionsystem.busreservation.dto.bus.TripScheduleDto;
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
-import com.busreseravtionsystem.busreservation.model.bus.TripSchedule;
 
 public interface BusReservationService {
 	/**
