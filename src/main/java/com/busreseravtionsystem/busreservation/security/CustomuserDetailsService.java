@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +23,7 @@ import com.busreseravtionsystem.busreservation.service.user.UserService;
 
 
 @Service("customUserDetailsService")
+@Transactional
 public class CustomuserDetailsService implements UserDetailsService {
 
 	@Autowired
@@ -38,6 +41,7 @@ public class CustomuserDetailsService implements UserDetailsService {
 		throw new UsernameNotFoundException("user with email" + email + "does not exist.");
 	}
 
+	
 	private UserDetails buildUserForAuthentication(Optional<UserDto> userDto, List<GrantedAuthority> authorities) {
 		
 		return new User(userDto.get().getEmail(), userDto.get().getPassword(), authorities);

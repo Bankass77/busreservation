@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.busreseravtionsystem.busreservation.controller.v1.command.AdminSignupFormCommand;
@@ -26,9 +27,18 @@ public class AdminController {
 	UserService userService;
 
 	@GetMapping(value = { "/", "/login" })
-	public ModelAndView login() {
-		return new ModelAndView("login");
+	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout) {
+		ModelAndView modelAndView= new ModelAndView("login");
 
+		if (error !=null) {
+			modelAndView.addObject("error", "Invalid Username and password!");
+		}
+		
+		if (logout !=null) {
+			modelAndView.addObject("message", "You're been logout out successfully.");
+		}
+		return modelAndView;
 	}
 
 	@GetMapping(value = "/signup")
@@ -54,8 +64,6 @@ public class AdminController {
 		} else {
 			try {
 				UserDto newUser = registerAdmin(adminSignupFormCommand);
-				
-				 
 			} catch (Exception e) {
 				result.rejectValue("email", "error.adminSignupFormCommand", e.getMessage());
 			}

@@ -8,11 +8,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.busreseravtionsystem.busreservation.dto.mapper.UserMapper;
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
@@ -26,7 +28,6 @@ import com.busreseravtionsystem.busreservation.repository.user.RoleRepository;
 import com.busreseravtionsystem.busreservation.repository.user.UserRepository;
 
 @Service("userService")
-@Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
 	private ModelMapper modelMapper;
 
 	@Override
+	@Transactional
 	public UserDto signup(UserDto userDto) {
 
 		Role userRole = new Role();
@@ -66,6 +68,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public UserDto findUserByEmail(String email) {
 
 		Optional<User> usOptional = Optional.ofNullable(userRepository.findByEmail(email));
@@ -78,6 +81,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public UserDto updteProfile(UserDto userDto) {
 
 		Optional<User> uOptional = Optional.ofNullable(userRepository.findByEmail(userDto.getEmail()));
@@ -94,6 +98,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public UserDto changePassword(UserDto userDto, String newPassword) {
 
 		Optional<User> userChangepassword = Optional.ofNullable(userRepository.findByEmail(userDto.getEmail()));
@@ -121,6 +126,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public List<UserDto> getAllUsers() {
 
 		return StreamSupport.stream(userRepository.findAll().spliterator(), false).distinct()
