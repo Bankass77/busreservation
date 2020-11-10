@@ -10,10 +10,12 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.busreseravtionsystem.busreservation.dto.bus.AgencyDto;
 import com.busreseravtionsystem.busreservation.dto.bus.BusDto;
