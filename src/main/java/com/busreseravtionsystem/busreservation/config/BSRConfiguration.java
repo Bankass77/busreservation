@@ -7,6 +7,7 @@ import org.modelmapper.config.Configuration.AccessLevel;
 import org.modelmapper.convention.NamingConventions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -58,6 +59,14 @@ public class BSRConfiguration {
 				.contact(new Contact("Guindo Amadou", null, "amguindo77@gmail.com"))
 				.license("Apache Licence Version 2.0").licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
 				.version("1.0").build();
+	}
+	
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		return bCryptPasswordEncoder;
+
 	}
 
 }

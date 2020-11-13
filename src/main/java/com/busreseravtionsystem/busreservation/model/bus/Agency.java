@@ -34,7 +34,7 @@ public class Agency {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ageny_id")
+	@Column(name = "agency_id")
 	private long id;
 
 	@Column

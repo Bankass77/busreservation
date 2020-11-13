@@ -1,10 +1,7 @@
 package com.busreseravtionsystem.busreservation.security;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,7 +18,8 @@ import com.busreseravtionsystem.busreservation.security.api.ApiJWTAuthorizationF
 import com.busreseravtionsystem.busreservation.security.form.CustomAuthentionSuccesshandler;
 import com.busreseravtionsystem.busreservation.security.form.CustomLogoutSuccessHandler;
 
-@Configuration
+@EnableWebSecurity(debug = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, proxyTargetClass = true)
 public class MultiHttpSecurityConfig {
 
 	private static final String AUTHORITIES_QUERY = "SELECT u.email, r.role FROM bankass.users u "
@@ -31,8 +29,6 @@ public class MultiHttpSecurityConfig {
 
 	@Configuration
 	@Order(1)
-	@EnableWebSecurity(debug = true)
-	@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, proxyTargetClass = true)
 	public static class ApiWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
 
 		@Autowired
@@ -41,6 +37,7 @@ public class MultiHttpSecurityConfig {
 		@Autowired
 		private CustomuserDetailsService userDetailsService;
 
+		
 		//private final DataSource dataSource;
 		/*
 		 * public ApiWebSecurityConfigAdapter(final DataSource dataSource) {
@@ -49,11 +46,7 @@ public class MultiHttpSecurityConfig {
 
 		@Override
 		protected void configure(AuthenticationManagerBuilder builderAuth) throws Exception {
-			builderAuth/*
-						 * .jdbcAuthentication().authoritiesByUsernameQuery(AUTHORITIES_QUERY)
-						 * .usersByUsernameQuery(USERS_QUERY).dataSource(dataSource).and()
-						 */
-					.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder);
+			builderAuth.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder);
 		}
 
 		public void configure(HttpSecurity http) throws Exception {
@@ -67,15 +60,10 @@ public class MultiHttpSecurityConfig {
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		}
 
+	
 	}
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
 
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder;
-
-	}
 
 	/*
 	 * @Bean public CorsConfigurationSource corsConfigurationSource() {
@@ -133,6 +121,7 @@ public class MultiHttpSecurityConfig {
 					"/configuration/security", "/webjars/**", "/swagger-resources/**", "/actuator", "/swagger-ui/**",
 					"/swagger-ui/index.html", "/swagger-ui/");
 		}
+		
 	}
 
 }

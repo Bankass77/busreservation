@@ -3,6 +3,7 @@ package com.busreseravtionsystem.busreservation.dto.mapper;
 import com.busreseravtionsystem.busreservation.dto.bus.TripScheduleDto;
 import com.busreseravtionsystem.busreservation.model.bus.TripSchedule;
 
+
 public class TripScheduleMapper {
 	
 	public static TripScheduleDto tripScheduleDto (TripSchedule tripSchedule) {

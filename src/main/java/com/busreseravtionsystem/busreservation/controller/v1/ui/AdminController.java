@@ -3,6 +3,7 @@ package com.busreseravtionsystem.busreservation.controller.v1.ui;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,6 +67,7 @@ public class AdminController {
 				UserDto newUser = registerAdmin(adminSignupFormCommand);
 			} catch (Exception e) {
 				result.rejectValue("email", "error.adminSignupFormCommand", e.getMessage());
+				return modelAndView;
 			}
 		}
 
@@ -75,14 +77,30 @@ public class AdminController {
 
 	private UserDto registerAdmin(@Valid AdminSignupFormCommand adminSignupFormCommand) {
 
-		UserDto userDto = new UserDto().setEmail(adminSignupFormCommand.getEmail())
-				.setFirstName(adminSignupFormCommand.getFirstName()).setLastName(adminSignupFormCommand.getLastName())
+		UserDto userDto = new UserDto()
+				.setEmail(adminSignupFormCommand.getEmail())
+				.setFirstName(adminSignupFormCommand.getFirstName())
+				.setLastName(adminSignupFormCommand.getLastName())
 				.setPassword(adminSignupFormCommand.getPassword())
-				.setMobileNumber(adminSignupFormCommand.getMobileNumber()).setAdmin(true);
+				.setMobileNumber(adminSignupFormCommand.getMobileNumber())
+				.setAdmin(true);
 		UserDto admiDto = userService.signup(userDto);
 		AgencyDto agencyDto = new AgencyDto().setDetails(adminSignupFormCommand.getAgencyDetails())
 				.setName(adminSignupFormCommand.getAgencyName()).setUserOwner(admiDto);
 		busReservationService.addAgency(agencyDto);
 		return admiDto;
+	}
+	
+	@GetMapping(value = {"/logout"})
+	private String logout() {
+		SecurityContextHolder.getContext().setAuthentication(null);
+		return "redirect:login";
+		
+	}
+	
+	@GetMapping(value = "/home")
+	public String home() {
+		
+		return "redirect:dashboard";
 	}
 }

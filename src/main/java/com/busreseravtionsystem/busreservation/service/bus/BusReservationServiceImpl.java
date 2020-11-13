@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
@@ -47,7 +48,7 @@ import com.busreseravtionsystem.busreservation.repository.user.UserRepository;
 import com.busreseravtionsystem.busreservation.util.RandomStringUtil;
 
 @Transactional
-@Service("busReservationService")
+@Component
 public class BusReservationServiceImpl implements BusReservationService {
 
 	@Autowired

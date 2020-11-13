@@ -13,9 +13,7 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
-
+import org.springframework.stereotype.Component;
 import com.busreseravtionsystem.busreservation.dto.mapper.UserMapper;
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
 import com.busreseravtionsystem.busreservation.exception.BSRExecption;
@@ -26,8 +24,7 @@ import com.busreseravtionsystem.busreservation.model.user.User;
 import com.busreseravtionsystem.busreservation.model.user.UserRole;
 import com.busreseravtionsystem.busreservation.repository.user.RoleRepository;
 import com.busreseravtionsystem.busreservation.repository.user.UserRepository;
-
-@Service("userService")
+@Component
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -46,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public UserDto signup(UserDto userDto) {
 
-		Role userRole = new Role();
+		Role userRole;
 
 		User userOptional = userRepository.findByEmail(userDto.getEmail());
 
@@ -58,11 +55,11 @@ public class UserServiceImpl implements UserService {
 			} else {
 				userRole = roleRepository.findByRole(UserRole.PASSENGER);
 			}
-			User user = new User().setEmail(userDto.getEmail()).setFirstName(userDto.getFirstName())
+			userOptional= new User().setEmail(userDto.getEmail()).setFirstName(userDto.getFirstName())
 					.setLastName(userDto.getLastName()).setMobileNumber(userDto.getMobileNumber())
 					.setPassword(userDto.getPassword()).setRoles(new HashSet<>(Arrays.asList(userRole)));
 
-			return UserMapper.userDto(userRepository.save(user));
+			return UserMapper.userDto(userRepository.save(userOptional));
 		}
 		throw exception(EntityType.USER, ExceptionType.DUPLICATE_ENTITY, userDto.getEmail());
 	}
