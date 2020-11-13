@@ -42,6 +42,7 @@ public class UserController {
 	private UserDto registerUser(@Valid UserSignupRequest userSignupRequest, boolean b) {
 
 		UserDto userDto = new UserDto().setEmail(userSignupRequest.getEmail())
+				.setPassword(userSignupRequest.getPassword())
 				.setFirstName(userSignupRequest.getFirstName()).setLastName(userSignupRequest.getLastname())
 				.setMobileNumber(userSignupRequest.getMobileNumber()).setAdmin(b);
 		return userService.signup(userDto);

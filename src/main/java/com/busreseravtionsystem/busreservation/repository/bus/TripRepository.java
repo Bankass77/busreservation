@@ -3,12 +3,15 @@ package com.busreseravtionsystem.busreservation.repository.bus;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.busreseravtionsystem.busreservation.model.bus.Agency;
 import com.busreseravtionsystem.busreservation.model.bus.Bus;
 import com.busreseravtionsystem.busreservation.model.bus.Stop;
 import com.busreseravtionsystem.busreservation.model.bus.Trip;
 
+
+@Repository
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
 	/**

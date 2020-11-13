@@ -24,6 +24,7 @@ public class TripDto {
 	private int fare;
 	private int journeyTime;
 	private String sourceStopCode;
+	private String sourceStopName;
 	private String destinationStopCode;
 	private String destinationStopName;
 	private String busCode;
