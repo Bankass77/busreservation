@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ import com.busreseravtionsystem.busreservation.service.user.UserService;
 public class DashbordController {
 
 	@Autowired
+	@Qualifier("userService")
 	private UserService userService;
 
 	@Autowired

@@ -50,7 +50,8 @@
 								<label for="email"><i class="zmdi zmdi-email"></i></label> <input
 									type="email" th:field="*{email}" name="email" id="email"
 									placeholder="Your Email" /> <small class="text-danger"
-									th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+									th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
+                            Error</small>
 							</div>
 
 							<div class="form-group">

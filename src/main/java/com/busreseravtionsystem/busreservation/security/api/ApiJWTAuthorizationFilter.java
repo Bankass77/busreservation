@@ -1,3 +1,4 @@
+
 package com.busreseravtionsystem.busreservation.security.api;
 
 import java.io.IOException;
@@ -42,17 +43,17 @@ public class ApiJWTAuthorizationFilter extends BasicAuthenticationFilter {
 			filterChain.doFilter(req, res);
 			return;
 		}
-		UsernamePasswordAuthenticationToken authenticationToken = getAuthencation(req);
-		// The new Token is then saved to SeccurityContext. 
+		UsernamePasswordAuthenticationToken authenticationToken = getAuthencation(req); // The new Token is then saved
+																						// to SeccurityContext.
 		SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		filterChain.doFilter(req, res);
 	}
 
 	/**
-	 * If the header is present, the getAuthentication mothod is invoked. It verifies the JWT, and if the token
-	 * is valid, it returns an access token which Spring wille use internally. Reads
-	 * the JWTs from the Authorization header, and the uses JWT to validate the
-	 * token
+	 * If the header is present, the getAuthentication mothod is invoked. It
+	 * verifies the JWT, and if the token is valid, it returns an access token which
+	 * Spring wille use internally. Reads the JWTs from the Authorization header,
+	 * and the uses JWT to validate the token
 	 * 
 	 * @param req
 	 * @return

@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class PageConfiguration implements WebMvcConfigurer {
+	
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry controllerRegistry) {

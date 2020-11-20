@@ -1,6 +1,5 @@
 package com.busreseravtionsystem.busreservation.model.user;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,13 +25,9 @@ import lombok.experimental.Accessors;
 @Entity
 @Accessors(chain = true)
 @Table(schema = "bankass", name = "role")
-public class Role implements Serializable {
+public class Role {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "role_id")
@@ -41,7 +36,6 @@ public class Role implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
 
-	@ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<User> users;
-
 }
