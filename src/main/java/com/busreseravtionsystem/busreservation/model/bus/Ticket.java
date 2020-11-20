@@ -26,7 +26,7 @@ import lombok.experimental.Accessors;
 public class Ticket {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ticket_id")
 	private long id;
 

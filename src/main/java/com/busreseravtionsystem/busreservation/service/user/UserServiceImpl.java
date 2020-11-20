@@ -13,7 +13,8 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import com.busreseravtionsystem.busreservation.dto.mapper.UserMapper;
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
 import com.busreseravtionsystem.busreservation.exception.BSRExecption;
@@ -24,7 +25,7 @@ import com.busreseravtionsystem.busreservation.model.user.User;
 import com.busreseravtionsystem.busreservation.model.user.UserRole;
 import com.busreseravtionsystem.busreservation.repository.user.RoleRepository;
 import com.busreseravtionsystem.busreservation.repository.user.UserRepository;
-@Component
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
 			}
 			userOptional= new User().setEmail(userDto.getEmail()).setFirstName(userDto.getFirstName())
 					.setLastName(userDto.getLastName()).setMobileNumber(userDto.getMobileNumber())
-					.setPassword(userDto.getPassword()).setRoles(new HashSet<>(Arrays.asList(userRole)));
+					.setPassword(passwordEncoder.encode(userDto.getPassword())).setRoles(new HashSet<>(Arrays.asList(userRole)));
 
 			return UserMapper.userDto(userRepository.save(userOptional));
 		}

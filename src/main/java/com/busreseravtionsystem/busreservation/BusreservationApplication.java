@@ -14,6 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.busreseravtionsystem.busreservation.dto.mapper.UserMapper;
+import com.busreseravtionsystem.busreservation.dto.user.RoleDto;
+import com.busreseravtionsystem.busreservation.dto.user.UserDto;
 import com.busreseravtionsystem.busreservation.model.bus.Agency;
 import com.busreseravtionsystem.busreservation.model.bus.Bus;
 import com.busreseravtionsystem.busreservation.model.bus.Stop;
@@ -41,8 +43,8 @@ public class BusreservationApplication {
 		SpringApplication.run(BusreservationApplication.class, args);
 	}
 
-	
-	/***@Autowired
+	/**
+@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Bean
 	CommandLineRunner init(RoleRepository roleRepository, UserRepository userRepository, StopRepository stopRepository,
@@ -72,7 +74,17 @@ public class BusreservationApplication {
 				admin = new User().setEmail("admin@gmail.com").setPassword(bCryptPasswordEncoder.encode("admin1")) // "123456"
 						.setFirstName("John").setLastName("Doe").setMobileNumber("9425094250")
 						.setRoles(new HashSet<Role>(Arrays.asList(adminRole))); // .setRoles(Arrays.asList(adminRole));
-				userRepository.save(admin);
+				//userRepository.save(admin);
+				Set<RoleDto> roleDtos= new HashSet<>();
+				roleDtos.add(new RoleDto().setName(admin.getRoles().toString()));
+				UserDto userDto = new UserDto().setAdmin(true)
+						.setEmail(admin.getEmail())
+						.setFirstName(admin.getFirstName())
+						.setLastName(admin.getLastName())
+						.setMobileNumber(admin.getMobileNumber())
+						.setPassword(admin.getPassword())
+						.setRolesDtos(roleDtos);
+				userService.signup(userDto );
 			}
 
 			// Crete a second admin user
@@ -84,7 +96,15 @@ public class BusreservationApplication {
 				admin2 = new User().setEmail("admin2@example.com").setFirstName("Boubacar").setLastName("Guindo")
 						.setMobileNumber("0789563445").setPassword(bCryptPasswordEncoder.encode("admin2"))
 						.setRoles(new HashSet<Role>(Arrays.asList(adminRole)));
-
+				Set<RoleDto> roleDtos= new HashSet<>();
+				roleDtos.add(new RoleDto().setName(admin2.getRoles().toString()));
+				UserDto userDto = new UserDto().setAdmin(true)
+						.setEmail(admin2.getEmail())
+						.setFirstName(admin2.getFirstName())
+						.setLastName(admin2.getLastName())
+						.setMobileNumber(admin2.getMobileNumber())
+						.setPassword(admin2.getPassword())
+						.setRolesDtos(roleDtos);
 				userService.signup(UserMapper.userDto(admin2));
 			}
 
@@ -163,6 +183,5 @@ public class BusreservationApplication {
 				tripScheduleRepository.save(tripSchedule);
 			}
 		};
-	}
-***/
+	}**/
 }

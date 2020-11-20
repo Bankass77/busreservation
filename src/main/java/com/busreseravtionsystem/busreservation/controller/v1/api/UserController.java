@@ -3,6 +3,8 @@ package com.busreseravtionsystem.busreservation.controller.v1.api;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +22,21 @@ import io.swagger.annotations.Api;
 @Api(value = "bsr-application", description = "Operations pertaining to user management in the BRS application")
 public class UserController {
 
-	@Autowired
+	@Qualifier("userService")
 	private UserService userService;
+
+	@Autowired
+	public UserController(UserService userService) {
+		super();
+		this.userService = userService;
+	}
 
 	/**
 	 * @param userSignupRequest
 	 * @return
 	 */
 	@PostMapping("/signup")
+	@PreAuthorize("hasRole('ADMIN')")
 	private Response signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
 
 		return Response.ok().setPayload(registerUser(userSignupRequest, false));
@@ -36,15 +45,15 @@ public class UserController {
 
 	/**
 	 * @param userSignupRequest
-	 * @param b
+	 * @param isAdmin
 	 * @return
 	 */
-	private UserDto registerUser(@Valid UserSignupRequest userSignupRequest, boolean b) {
+	private UserDto registerUser(@Valid UserSignupRequest userSignupRequest, boolean isAdmin) {
 
 		UserDto userDto = new UserDto().setEmail(userSignupRequest.getEmail())
 				.setPassword(userSignupRequest.getPassword())
 				.setFirstName(userSignupRequest.getFirstName()).setLastName(userSignupRequest.getLastname())
-				.setMobileNumber(userSignupRequest.getMobileNumber()).setAdmin(b);
+				.setMobileNumber(userSignupRequest.getMobileNumber()).setAdmin(isAdmin);
 		return userService.signup(userDto);
 	}
 }

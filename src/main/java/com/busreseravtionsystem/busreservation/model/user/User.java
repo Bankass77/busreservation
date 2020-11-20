@@ -1,14 +1,10 @@
 package com.busreseravtionsystem.busreservation.model.user;
 
-import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +18,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+
 import org.springframework.lang.NonNull;
 
 import lombok.AllArgsConstructor;
@@ -44,11 +41,8 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class User implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class User  {
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,7 +55,7 @@ public class User implements Serializable {
 	@NotEmpty(message = "First name is required")
 	private String firstName;
 
-	@NonNull
+	//@NonNull
 	@Column(name = "last_name", updatable = true)
 	@NotBlank
 	@NotEmpty(message = "Last name is required")
@@ -91,13 +85,20 @@ public class User implements Serializable {
 	private String mobileNumber;
 
 	// User role
-	@ManyToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@Enumerated(EnumType.STRING)
-	@ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
-	// @CollectionTable (schema = "bankass",name = "user_role", joinColumns =
-	// @JoinColumn(name="_id"))
-	@JoinTable(schema = "bankass", name = "users_role", joinColumns = {
-			@JoinColumn(name = "users_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
+	/*
+	 * @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	 * 
+	 * @JoinTable(schema = "bankass", name = "users_role", joinColumns = {
+	 * 
+	 * @JoinColumn(name = "users_id") }, inverseJoinColumns = { @JoinColumn(name =
+	 * "role_id") })
+	 */
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(schema = "bankass",name = "users_roles", 
+	    joinColumns = @JoinColumn(name = "users_id"), 
+	    inverseJoinColumns = @JoinColumn(name = "role_id")
+	)
 	private Set<Role> roles;
 
 	public String getFullName() {

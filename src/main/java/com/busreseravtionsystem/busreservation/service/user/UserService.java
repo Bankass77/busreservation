@@ -2,8 +2,11 @@ package com.busreseravtionsystem.busreservation.service.user;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.busreseravtionsystem.busreservation.dto.user.UserDto;
 
+@Service("userService")
 public interface UserService {
 
 	/**

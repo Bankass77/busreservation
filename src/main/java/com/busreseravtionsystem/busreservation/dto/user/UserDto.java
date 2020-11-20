@@ -2,7 +2,6 @@ package com.busreseravtionsystem.busreservation.dto.user;
 
 import java.util.Set;
 
-import com.busreseravtionsystem.busreservation.model.user.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
