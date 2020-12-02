@@ -2,7 +2,7 @@ package com.busreseravtionsystem.busreservation.model.user;
 
 public enum UserRole {
 
-	ADMIN("admin"), PASSENGER("user");
+	ADMIN("ADMIN"), PASSENGER("PASSENGER");
 
 	private String value;
 

@@ -20,6 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RoleDto {
 
-	private String name;
+	private String role;
 
 }

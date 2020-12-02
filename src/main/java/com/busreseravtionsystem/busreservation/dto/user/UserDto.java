@@ -36,7 +36,7 @@ public class UserDto {
 
 	private boolean isAdmin;
 	
-	private Set<RoleDto> rolesDtos;
+	private Set<RoleDto> roles;
 	
 	public String getFullName() {
 		

@@ -1,5 +1,6 @@
 package com.busreseravtionsystem.busreservation.model.user;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -99,7 +100,7 @@ public class User  {
 	    joinColumns = @JoinColumn(name = "users_id"), 
 	    inverseJoinColumns = @JoinColumn(name = "role_id")
 	)
-	private Set<Role> roles;
+	private Collection<Role> roles;
 
 	public String getFullName() {
 		return firstName != null ? firstName.concat("").concat("lastName") : "";

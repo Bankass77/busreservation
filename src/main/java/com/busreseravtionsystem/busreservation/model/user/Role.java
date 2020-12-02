@@ -1,7 +1,6 @@
 package com.busreseravtionsystem.busreservation.model.user;
 
-import java.util.List;
-
+import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,5 +36,5 @@ public class Role {
 	private UserRole role;
 
 	@ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<User> users;
+	private Collection<User> users;
 }

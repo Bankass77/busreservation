@@ -82,7 +82,7 @@ public class MultiHttpSecurityConfig {
 
 		@Override
 		protected void configure(AuthenticationManagerBuilder builder) throws Exception {
-			builder.userDetailsService(customuserDetailsService).passwordEncoder(bCryptPasswordEncoder);
+			builder.userDetailsService(this.customuserDetailsService).passwordEncoder(bCryptPasswordEncoder);
 		}
 
 		@Override
