@@ -1,4 +1,4 @@
-/**package com.busreseravtionsystem.busreservation.controller.v1.api;
+package com.busreseravtionsystem.busreservation.controller.v1.api;
 
 import java.util.List;
 import java.util.Optional;
@@ -124,4 +124,4 @@ public class BusReservationSystemController {
 
 	}
 }
-**/
+
