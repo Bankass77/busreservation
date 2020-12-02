@@ -35,8 +35,11 @@ public class UserController {
 	 * @param userSignupRequest
 	 * @return
 	 */
+	/**
+	 * @param userSignupRequest
+	 * @return
+	 */
 	@PostMapping("/signup")
-
 	@PreAuthorize("hasRole('ADMIN')")
 	private Response signup(@RequestBody @Valid UserSignupRequest userSignupRequest) {
 

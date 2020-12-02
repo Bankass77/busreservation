@@ -95,7 +95,7 @@ public class User  {
 	 * "role_id") })
 	 */
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(schema = "bankass",name = "users_roles", 
 	    joinColumns = @JoinColumn(name = "users_id"), 
 	    inverseJoinColumns = @JoinColumn(name = "role_id")

@@ -88,7 +88,7 @@ public class MultiHttpSecurityConfig {
 		@Override
 		protected void configure(HttpSecurity httpSecurity) throws Exception {
 			httpSecurity.cors().and().csrf().disable().authorizeRequests().antMatchers("/").permitAll()
-					.antMatchers("/signup").permitAll().antMatchers("/dashbord/**").hasRole("ADMIN").anyRequest()
+					.antMatchers("/signup").permitAll().antMatchers("/dashbaord/**").hasRole("ADMIN").anyRequest()
 					.authenticated().and().formLogin().loginPage("/login").permitAll().failureUrl("/login?error=true")
 					.usernameParameter("email").passwordParameter("password")
 					.successHandler(customAuthentionSuccesshandler).and().logout().permitAll()

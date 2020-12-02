@@ -19,7 +19,13 @@ import com.busreseravtionsystem.busreservation.dto.user.UserDto;
 import com.busreseravtionsystem.busreservation.service.bus.BusReservationService;
 import com.busreseravtionsystem.busreservation.service.user.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+
+
 @Controller
+@Slf4j
 public class AdminController {
 
 	@Autowired
@@ -67,8 +73,11 @@ public class AdminController {
 		} else {
 			try {
 				UserDto newUser = registerAdmin(adminSignupFormCommand);
+				log.info("UserDto:{}",  newUser);
+				
 			} catch (Exception e) {
 				result.rejectValue("email", "error.adminSignupFormCommand", e.getMessage());
+				
 				return modelAndView;
 			}
 		}
@@ -87,6 +96,8 @@ public class AdminController {
 				.setMobileNumber(adminSignupFormCommand.getMobileNumber())
 				.setAdmin(true);
 		UserDto admiDto = userService.signup(userDto);
+		
+		log.info("admiDto: {}", admiDto);
 		AgencyDto agencyDto = new AgencyDto().setDetails(adminSignupFormCommand.getAgencyDetails())
 				.setName(adminSignupFormCommand.getAgencyName()).setUserOwner(admiDto);
 		busReservationService.addAgency(agencyDto);

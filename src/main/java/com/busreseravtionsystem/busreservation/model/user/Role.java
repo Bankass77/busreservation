@@ -35,6 +35,6 @@ public class Role {
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
 
-	@ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "roles", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Collection<User> users;
 }

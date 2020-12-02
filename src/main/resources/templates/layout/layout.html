@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<head th:replace="fragment/header :: header">
+<head th:replace="fragments/header :: header">
 
-<title>Header</title>
+<title  th:replace="${title}">Header</title>
 </head>
 
 <body class="fix-header  fix-sidebar card-no-border">
